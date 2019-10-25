@@ -18,9 +18,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "funcionario")
 @Data
-public class Usuario {
+public class Funcionario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Usuario {
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date admissao;
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<Ponto> pontos;
 

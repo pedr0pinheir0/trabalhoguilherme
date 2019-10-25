@@ -1,6 +1,5 @@
 package edu.fema.TrabalhoTopicosSpring.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -31,8 +30,8 @@ public class Ponto {
 
 	@ManyToOne
 	@JsonBackReference
-	private Usuario usuario;
-
+	private Funcionario funcionario;
+	
 	private LocalDateTime datahora;
 
 }

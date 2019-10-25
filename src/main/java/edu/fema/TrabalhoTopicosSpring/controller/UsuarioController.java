@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.fema.TrabalhoTopicosSpring.model.Usuario;
+import edu.fema.TrabalhoTopicosSpring.model.Funcionario;
 import edu.fema.TrabalhoTopicosSpring.repository.UsuarioRepository;
 
 @RestController
@@ -27,7 +27,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> cadastrarUsuario(@RequestBody @Valid Usuario usuario) {
+	public ResponseEntity<?> cadastrarUsuario(@RequestBody @Valid Funcionario usuario) {
 		return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.save(usuario));
 	}
 
