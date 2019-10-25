@@ -1,6 +1,7 @@
 package edu.fema.TrabalhoTopicosSpring.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +33,13 @@ public class Ponto {
 	@ManyToOne
 	@JsonBackReference
 	private Funcionario funcionario;
-	
+
+	@JsonIgnore
 	private LocalDateTime datahora;
+
+	public String getHorario() {
+		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		return formatador.format(datahora);
+	}
 
 }

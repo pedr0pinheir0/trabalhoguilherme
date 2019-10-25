@@ -16,7 +16,7 @@ import edu.fema.TrabalhoTopicosSpring.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/usuario")
-public class UsuarioController {
+public class FuncionarioController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
