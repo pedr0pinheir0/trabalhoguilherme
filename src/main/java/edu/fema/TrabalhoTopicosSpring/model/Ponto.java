@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import edu.fema.TrabalhoTopicosSpring.model.enums.TipoPontoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,8 @@ public class Ponto {
 	@JsonBackReference
 	private Funcionario funcionario;
 
+	private TipoPontoEnum tipo;
+	
 	@JsonIgnore
 	private LocalDateTime datahora;
 
