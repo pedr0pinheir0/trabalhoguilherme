@@ -3,6 +3,7 @@ package edu.fema.TrabalhoTopicosSpring.model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,7 +36,9 @@ public class Ponto {
 	@JsonBackReference
 	private Funcionario funcionario;
 
-	private TipoPontoEnum tipo;
+	@JsonIgnore
+	@Column(name="tipo")
+	private TipoPontoEnum tipoPontoEnum;
 	
 	@JsonIgnore
 	private LocalDateTime datahora;
@@ -43,6 +46,10 @@ public class Ponto {
 	public String getHorario() {
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		return formatador.format(datahora);
+	}
+	
+	public String getTipo() {
+		return tipoPontoEnum.getTipo();
 	}
 
 }

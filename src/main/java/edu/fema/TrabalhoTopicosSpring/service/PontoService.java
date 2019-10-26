@@ -26,12 +26,12 @@ public class PontoService {
 		if(null != funcionario){
 			Integer rowCount = pontoRepository.countByFuncionario(funcionario);
 			if(rowCount == 0) {
-				ponto = pontoRepository.save(Ponto.builder().funcionario(funcionario).datahora(LocalDateTime.now()).tipo(TipoPontoEnum.E).build());
+				ponto = pontoRepository.save(Ponto.builder().funcionario(funcionario).datahora(LocalDateTime.now()).tipoPontoEnum(TipoPontoEnum.E).build());
 			} else {
 				TipoPontoEnum tipo;
 				Ponto ultimoPonto = pontoRepository.findUltimoPontoByFuncionarioId(funcionario.getCodigo());
-				tipo = ultimoPonto.getTipo().equals(TipoPontoEnum.E) ? TipoPontoEnum.S : TipoPontoEnum.E;
-				ponto = pontoRepository.save(Ponto.builder().funcionario(funcionario).datahora(LocalDateTime.now()).tipo(tipo).build());
+				tipo = ultimoPonto.getTipoPontoEnum().equals(TipoPontoEnum.E) ? TipoPontoEnum.S : TipoPontoEnum.E;
+				ponto = pontoRepository.save(Ponto.builder().funcionario(funcionario).datahora(LocalDateTime.now()).tipoPontoEnum(tipo).build());
 			}
 		}
 		return ponto;
