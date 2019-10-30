@@ -14,13 +14,13 @@ import edu.fema.TrabalhoTopicosSpring.model.Funcionario;
 import edu.fema.TrabalhoTopicosSpring.model.Ponto;
 import edu.fema.TrabalhoTopicosSpring.model.enums.TipoPontoEnum;
 import edu.fema.TrabalhoTopicosSpring.repository.PontoRepository;
-import edu.fema.TrabalhoTopicosSpring.repository.UsuarioRepository;
+import edu.fema.TrabalhoTopicosSpring.repository.FuncionarioRepository;
 
 @Service
 public class PontoService {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private FuncionarioRepository usuarioRepository;
 
 	@Autowired
 	private PontoRepository pontoRepository;

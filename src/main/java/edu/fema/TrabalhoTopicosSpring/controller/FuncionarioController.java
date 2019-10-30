@@ -13,28 +13,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.fema.TrabalhoTopicosSpring.model.Funcionario;
-import edu.fema.TrabalhoTopicosSpring.repository.UsuarioRepository;
+import edu.fema.TrabalhoTopicosSpring.model.dto.NovoFuncionarioDTO;
+import edu.fema.TrabalhoTopicosSpring.repository.FuncionarioRepository;
+import edu.fema.TrabalhoTopicosSpring.service.FuncionarioService;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/funcionario")
 public class FuncionarioController {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private FuncionarioRepository funcionarioRepository;
 
+	@Autowired
+	private FuncionarioService funcionarioService;
+	
 	@GetMapping
 	public ResponseEntity<?> buscarTodos() {
-		return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findAll());
+		return ResponseEntity.status(HttpStatus.OK).body(funcionarioRepository.findAll());
 	}
 
 	@GetMapping("/{codigo}")
 	public ResponseEntity<?> buscarPorCodigo(@PathVariable @Valid Long codigo) {
-		return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findById(codigo));
+		return ResponseEntity.status(HttpStatus.OK).body(funcionarioRepository.findById(codigo));
 	}
 
 	@PostMapping
-	public ResponseEntity<?> cadastrarUsuario(@RequestBody @Valid Funcionario usuario) {
-		return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.save(usuario));
+	public ResponseEntity<?> cadastrarUsuario(@RequestBody @Valid NovoFuncionarioDTO funcionario) {
+		return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.salvarFuncionario(funcionario));
 	}
 
 }
