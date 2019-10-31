@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import edu.fema.TrabalhoTopicosSpring.model.Credencial;
 import edu.fema.TrabalhoTopicosSpring.model.Funcionario;
 import edu.fema.TrabalhoTopicosSpring.model.dto.NovoFuncionarioDTO;
+import edu.fema.TrabalhoTopicosSpring.model.enums.GeneroEnum;
 import edu.fema.TrabalhoTopicosSpring.repository.CredencialRepository;
 import edu.fema.TrabalhoTopicosSpring.repository.FuncionarioRepository;
 
@@ -24,7 +25,9 @@ public class FuncionarioService {
 	CredencialRepository credencialRepository;
 
 	public Funcionario salvarFuncionario(NovoFuncionarioDTO dto) {
-		Funcionario funcionario = Funcionario.builder().nome(dto.getNome()).sexo(dto.getSexo()).cpf(dto.getCpf())
+		
+		GeneroEnum genero = validarGenero(dto.getGenero());
+		Funcionario funcionario = Funcionario.builder().nome(dto.getNome()).genero(genero).cpf(dto.getCpf())
 				.admissao(dto.getAdmissao()).build();
 		Funcionario funcionarioSalvo = funcionarioRepository.save(funcionario);
 		Credencial credencial = Credencial.builder().nomeDeUsuario(dto.getNomeDeUsuario()).senha(dto.getSenha())
@@ -35,6 +38,18 @@ public class FuncionarioService {
 
 		return 	funcionarioRepository.save(funcionarioSalvoBanco);
 
+	}
+
+	private GeneroEnum validarGenero(String generoInformado) {
+		GeneroEnum genero;
+		if("M".equals(generoInformado)) {
+			genero = GeneroEnum.M;
+		} else if ("F".equals(generoInformado)) {
+			genero = GeneroEnum.F;
+		} else {
+			genero = GeneroEnum.N;
+		}
+		return genero;
 	}
 
 	private String gerarHash(String senha) {

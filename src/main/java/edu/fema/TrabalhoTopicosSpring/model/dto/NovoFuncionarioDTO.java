@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
+import edu.fema.TrabalhoTopicosSpring.model.enums.GeneroEnum;
 import lombok.Data;
 import lombok.ToString;
 
@@ -21,7 +22,7 @@ public class NovoFuncionarioDTO {
 	private String cpf;
 
 	@NotEmpty
-	private String sexo;
+	private String genero;
 
 	@NotEmpty
 	private String nomeDeUsuario;

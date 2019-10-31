@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
+import edu.fema.TrabalhoTopicosSpring.model.enums.GeneroEnum;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
@@ -37,7 +40,7 @@ public class Funcionario {
 
 	private String nome;
 	private String cpf;
-	private String sexo;
+	private GeneroEnum genero;
 
 	@JsonIgnore
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
@@ -52,4 +55,8 @@ public class Funcionario {
 	@JsonManagedReference
 	@JsonIgnore
 	private Credencial credencial;
+	
+	public String getGenero() {
+		return genero.getGenero();
+	}
 }
