@@ -8,4 +8,6 @@ import edu.fema.TrabalhoTopicosSpring.model.Funcionario;
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 
+	Long findSaldoDeHorasByCodigo(Long codigo);
+	int countByCredencialNomeDeUsuario(String nomeDeUsuario);
 }

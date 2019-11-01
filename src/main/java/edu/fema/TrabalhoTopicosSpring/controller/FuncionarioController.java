@@ -28,7 +28,7 @@ public class FuncionarioController {
 	
 	@GetMapping
 	public ResponseEntity<?> buscarTodos() {
-		return ResponseEntity.status(HttpStatus.OK).body(funcionarioRepository.findAll());
+		return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.findAll());
 	}
 
 	@GetMapping("/{codigo}")

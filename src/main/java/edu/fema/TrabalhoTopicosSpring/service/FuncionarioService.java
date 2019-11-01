@@ -1,18 +1,21 @@
 package edu.fema.TrabalhoTopicosSpring.service;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.fema.TrabalhoTopicosSpring.exception.ExceptionEnum;
+import edu.fema.TrabalhoTopicosSpring.exception.TrabalhoException;
 import edu.fema.TrabalhoTopicosSpring.model.Credencial;
 import edu.fema.TrabalhoTopicosSpring.model.Funcionario;
+import edu.fema.TrabalhoTopicosSpring.model.dto.CredencialDTO;
+import edu.fema.TrabalhoTopicosSpring.model.dto.FuncionarioConsultaDTO;
 import edu.fema.TrabalhoTopicosSpring.model.dto.NovoFuncionarioDTO;
+import edu.fema.TrabalhoTopicosSpring.model.dto.PessoalDTO;
 import edu.fema.TrabalhoTopicosSpring.model.enums.GeneroEnum;
-import edu.fema.TrabalhoTopicosSpring.repository.CredencialRepository;
 import edu.fema.TrabalhoTopicosSpring.repository.FuncionarioRepository;
 
 @Service
@@ -21,28 +24,59 @@ public class FuncionarioService {
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
 
-	@Autowired
-	CredencialRepository credencialRepository;
+	public List<FuncionarioConsultaDTO> findAll() {
+		return converterLista(funcionarioRepository.findAll());
+	}
 
-	public Funcionario salvarFuncionario(NovoFuncionarioDTO dto) {
-		
-		GeneroEnum genero = validarGenero(dto.getGenero());
-		Funcionario funcionario = Funcionario.builder().nome(dto.getNome()).genero(genero).cpf(dto.getCpf())
-				.admissao(dto.getAdmissao()).build();
-		Funcionario funcionarioSalvo = funcionarioRepository.save(funcionario);
-		Credencial credencial = Credencial.builder().nomeDeUsuario(dto.getNomeDeUsuario()).senha(dto.getSenha())
+	public FuncionarioConsultaDTO salvarFuncionario(NovoFuncionarioDTO dto) {
+		Integer rowCount = funcionarioRepository.countByCredencialNomeDeUsuario(dto.getNomeDeUsuario());
+		if(rowCount.equals(1)) {
+			throw new TrabalhoException(ExceptionEnum.USUARIO_JA_CADASTRADO);
+		}
+		Funcionario funcionario = converterFuncionarioDtoParaFuncionario(dto);
+		funcionario.setCredencial(extrairCredenciaisDeDto(dto));
+		funcionario.setSaldoDeHoras(0L);
+		funcionarioRepository.save(funcionario);
+		return gerarObjetoDeConsultaDeFuncionario(funcionario);
+
+	}
+
+	public Long buscarTotalDeSegundosPorFuncionario(Funcionario funcionario) {
+		return funcionarioRepository.findSaldoDeHorasByCodigo(funcionario.getCodigo());
+	}
+
+	private List<FuncionarioConsultaDTO> converterLista(List<Funcionario> funcionarios) {
+		List<FuncionarioConsultaDTO> novaLista = new ArrayList<FuncionarioConsultaDTO>();
+		funcionarios.forEach(objeto -> {
+			novaLista.add(gerarObjetoDeConsultaDeFuncionario(objeto));
+		});
+		return novaLista;
+	}
+
+	private FuncionarioConsultaDTO gerarObjetoDeConsultaDeFuncionario(Funcionario funcionario) {
+		Long codigo = funcionario.getCodigo();
+		Long horas = funcionario.getSaldoDeHoras();
+		PessoalDTO pessoal = new PessoalDTO(funcionario.getNome(), funcionario.getGenero(), funcionario.getCpf());
+		CredencialDTO credencial = new CredencialDTO(funcionario.getCredencial().getNomeDeUsuario(),
+				funcionario.getCredencial().getSenha(), funcionario.getCredencial().getHash());
+		String cargo = funcionario.getCargo();
+		return FuncionarioConsultaDTO.builder().codigo(codigo).saldoDeHoras(horas).credenciais(credencial)
+				.dadosPessoais(pessoal).cargo(cargo).build();
+	}
+
+	private Credencial extrairCredenciaisDeDto(NovoFuncionarioDTO dto) {
+		return Credencial.builder().nomeDeUsuario(dto.getNomeDeUsuario()).senha(dto.getSenha())
 				.hash(gerarHash(dto.getSenha())).build();
-		Credencial credencialSalva = credencialRepository.save(credencial);
-		Funcionario funcionarioSalvoBanco = funcionarioRepository.findById(funcionarioSalvo.getCodigo()).orElse(null);
-		funcionarioSalvoBanco.setCredencial(credencialSalva);
+	}
 
-		return 	funcionarioRepository.save(funcionarioSalvoBanco);
-
+	private Funcionario converterFuncionarioDtoParaFuncionario(NovoFuncionarioDTO dto) {
+		return Funcionario.builder().nome(dto.getNome()).genero(validarGenero(dto.getGenero())).cpf(dto.getCpf())
+				.admissao(dto.getAdmissao()).cargo(dto.getCargo()).build();
 	}
 
 	private GeneroEnum validarGenero(String generoInformado) {
 		GeneroEnum genero;
-		if("M".equals(generoInformado)) {
+		if ("M".equals(generoInformado)) {
 			genero = GeneroEnum.M;
 		} else if ("F".equals(generoInformado)) {
 			genero = GeneroEnum.F;

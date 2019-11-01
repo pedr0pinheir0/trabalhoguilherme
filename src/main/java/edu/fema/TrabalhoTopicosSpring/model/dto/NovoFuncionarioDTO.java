@@ -2,12 +2,11 @@ package edu.fema.TrabalhoTopicosSpring.model.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
-import edu.fema.TrabalhoTopicosSpring.model.enums.GeneroEnum;
 import lombok.Data;
 import lombok.ToString;
 
@@ -15,21 +14,25 @@ import lombok.ToString;
 @ToString
 public class NovoFuncionarioDTO {
 
-	@NotEmpty
+	@NotNull
 	private String nome;
 
-	@NotEmpty
+	@NotNull
 	private String cpf;
 
-	@NotEmpty
+	@NotNull
 	private String genero;
 
-	@NotEmpty
+	@NotNull
 	private String nomeDeUsuario;
 
-	@NotEmpty
+	@NotNull
 	private String senha;
 
+	@NotNull
+	private String cargo;
+
+	@NotNull
 	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy")
 	private Date admissao;
 

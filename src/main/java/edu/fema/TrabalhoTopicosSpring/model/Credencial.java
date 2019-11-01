@@ -1,27 +1,20 @@
 package edu.fema.TrabalhoTopicosSpring.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.sun.istack.NotNull;
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "credencial")
 @Data
 @Builder
+@Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 public class Credencial {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	@NotNull
 	@Size(min = 1, max = 15)
@@ -32,8 +25,5 @@ public class Credencial {
 	private String senha;
 
 	@NotNull
-	@OneToOne
-	private Funcionario funcionario;
-	
 	private String hash;
 }

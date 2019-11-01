@@ -19,5 +19,5 @@ public interface PontoRepository extends JpaRepository<Ponto, Long> {
 	public Ponto findUltimoPontoByFuncionarioId(@Param(value = "id") Long idFuncionario);
 
 	public List<Ponto> findByFuncionario(Funcionario funcionario);
-
+	
 }

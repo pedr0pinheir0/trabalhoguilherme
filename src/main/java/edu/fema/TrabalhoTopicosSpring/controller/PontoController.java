@@ -29,12 +29,7 @@ public class PontoController {
 		return ResponseEntity.status(HttpStatus.OK).body(pontoRepository.findAll());
 	}
 	
-	@GetMapping("/funcionario/total")
-	public ResponseEntity<?> buscarHoras(@RequestParam Long id) {
-		System.out.println();
-		return ResponseEntity.status(HttpStatus.OK).body(pontoService.buscarTotalHoras(id));
-	}
-
+	
 	@GetMapping("/{codigo}")
 	public ResponseEntity<?> buscarPontoPorCodigo(@PathVariable Long codigo) {
 		return ResponseEntity.status(HttpStatus.OK).body(pontoRepository.findById(codigo));
