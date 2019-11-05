@@ -28,9 +28,18 @@ public class FuncionarioService {
 		return converterLista(funcionarioRepository.findAll());
 	}
 
+	public FuncionarioConsultaDTO funcionarioPorCodigo(Long codigo) {
+		Funcionario funcionario = funcionarioRepository.findById(codigo).orElse(null);
+		if (funcionario == null) {
+			throw new TrabalhoException(ExceptionEnum.USUARIO_NULL);
+		}
+		return gerarObjetoDeConsultaDeFuncionario(funcionario);
+
+	}
+
 	public FuncionarioConsultaDTO salvarFuncionario(NovoFuncionarioDTO dto) {
 		Integer rowCount = funcionarioRepository.countByCredencialNomeDeUsuario(dto.getNomeDeUsuario());
-		if(rowCount.equals(1)) {
+		if (rowCount.equals(1)) {
 			throw new TrabalhoException(ExceptionEnum.USUARIO_JA_CADASTRADO);
 		}
 		Funcionario funcionario = converterFuncionarioDtoParaFuncionario(dto);

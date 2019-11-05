@@ -11,7 +11,9 @@ public enum ExceptionEnum {
 
 	USUARIO_JA_CADASTRADO("Já existe um usuário com este nome de usuário!", "username inválido",
 			HttpStatus.BAD_REQUEST),
-	USUARIO_INEXISTENTE("Não é possível registrar ponto para esse usuário", "codigo inválido", HttpStatus.BAD_REQUEST);
+	USUARIO_INEXISTENTE("Não é possível registrar ponto para esse usuário", "codigo inválido", HttpStatus.BAD_REQUEST),
+
+	USUARIO_NULL("Usuário nulo", "usuário inválido", HttpStatus.NOT_FOUND);
 
 	private String mensagemUsuario;
 	private String mensagemDev;
