@@ -10,5 +10,5 @@ public class CredencialDTO {
 	private String nomeDeUsuario;
 	private String senha;
 	private String hash;
-
+	
 }

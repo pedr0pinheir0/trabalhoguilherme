@@ -12,18 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.fema.TrabalhoTopicosSpring.model.Funcionario;
-import edu.fema.TrabalhoTopicosSpring.model.dto.FuncionarioConsultaDTO;
 import edu.fema.TrabalhoTopicosSpring.model.dto.NovoFuncionarioDTO;
-import edu.fema.TrabalhoTopicosSpring.repository.FuncionarioRepository;
 import edu.fema.TrabalhoTopicosSpring.service.FuncionarioService;
 
 @RestController
 @RequestMapping("/funcionario")
 public class FuncionarioController {
-
-	@Autowired
-	private FuncionarioRepository funcionarioRepository;
 
 	@Autowired
 	private FuncionarioService funcionarioService;

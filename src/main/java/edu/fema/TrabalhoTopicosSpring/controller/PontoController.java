@@ -28,8 +28,7 @@ public class PontoController {
 	public ResponseEntity<?> buscarTodosOsPontos() {
 		return ResponseEntity.status(HttpStatus.OK).body(pontoRepository.findAll());
 	}
-	
-	
+
 	@GetMapping("/{codigo}")
 	public ResponseEntity<?> buscarPontoPorCodigo(@PathVariable Long codigo) {
 		return ResponseEntity.status(HttpStatus.OK).body(pontoRepository.findById(codigo));

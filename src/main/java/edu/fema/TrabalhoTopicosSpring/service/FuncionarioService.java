@@ -2,6 +2,7 @@ package edu.fema.TrabalhoTopicosSpring.service;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class FuncionarioService {
 		funcionarios.forEach(objeto -> {
 			novaLista.add(gerarObjetoDeConsultaDeFuncionario(objeto));
 		});
-		return novaLista;
+		return Collections.unmodifiableList(novaLista);
 	}
 
 	private FuncionarioConsultaDTO gerarObjetoDeConsultaDeFuncionario(Funcionario funcionario) {

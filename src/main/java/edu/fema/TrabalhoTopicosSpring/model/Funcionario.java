@@ -1,5 +1,6 @@
 package edu.fema.TrabalhoTopicosSpring.model;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -51,4 +52,9 @@ public class Funcionario {
 	private Credencial credencial;
 
 	private Long saldoDeHoras;
+
+	public List<Ponto> getPontos() {
+		return Collections.unmodifiableList(pontos);
+	}
+
 }
